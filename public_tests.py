@@ -1,5 +1,4 @@
 # from p_solved import *
-from main.oop_wrapper import *
 
 # imports para simular a stream de input/output
 import io
