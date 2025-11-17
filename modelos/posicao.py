@@ -1,28 +1,33 @@
 # João Calado - 24295
+from raiz.utils import alpha_para_index, index_para_alpha
+from raiz.constantes import *
 
-def cria_posicao(column: str, row: str):
-    if (not column.isalpha()) or (not str(row).isdigit()):
+def cria_posicao(coluna, linha):
+    if (not eh_posicao([coluna, linha])):
         raise ValueError("cria_posicao: argumentos invalidos")
-    return {"row": int(row), "column": column.lower()}
+    return [coluna.lower(), linha]
 
 def cria_copia_posicao(pos):
-    return cria_posicao(obter_pos_c(pos), obter_pos_l(pos))
+    if(type(pos) == dict): pos = list(pos.values())
+    return cria_posicao(pos[0], pos[1])
 
 def obter_pos_c(pos):
-    return pos["column"]
+    return pos[0]
 
 def obter_pos_l(pos):
-    return str(pos["row"])
+    return str(pos[1])
 
 def eh_posicao(arg):
-    return isinstance(arg, dict) and "row" in arg and "column" in arg
+    return ( isinstance(arg, list) and arg[0].isalpha() and str(arg[1]).isdigit() 
+    and alpha_para_index(arg[0]) > 0 and alpha_para_index(arg[0]) <= TAMANHO_TABULEIRO 
+    and int(arg[1]) > 0 and int(arg[1]) <= TAMANHO_TABULEIRO )
 
 def posicoes_iguais(p1, p2):
     return (
         eh_posicao(p1) 
         and eh_posicao(p2) 
-        and p1["row"] == p2["row"] 
-        and p1["column"] == p2["column"]
+        and p1[0] == p2[0] 
+        and p1[1] == p2[1]
     )
 
 def posicao_para_str(pos):
@@ -30,4 +35,12 @@ def posicao_para_str(pos):
 
 def obter_posicoes_adjacentes(pos):
     # retorna um tuplo com as posicoes adjacentes
-    pass
+    col = alpha_para_index(obter_pos_c(pos))
+    li = int(obter_pos_l(pos))
+    posicoes_adj = [[col, li - 1], [col - 1, li], [col, li + 1], [col + 1, li]] # a ordem importa
+    resultado = []
+    for p in posicoes_adj:  
+        if(p[0] >= 1 and p[0] <= TAMANHO_TABULEIRO and p[1] >= 1 and p[1] <= TAMANHO_TABULEIRO):
+            resultado.append( cria_posicao(index_para_alpha(p[0]), str(p[1])) )
+        
+    return tuple(resultado)

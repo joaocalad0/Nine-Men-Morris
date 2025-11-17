@@ -1,4 +1,4 @@
-from modelos import peca, posicao, tabuleiro
+from modelos.tabuleiro import *
 
 def obter_movimento_manual(tab, peca):
     return tuple()
