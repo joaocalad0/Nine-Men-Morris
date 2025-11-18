@@ -1,4 +1,4 @@
-# from p_solved import *
+from raiz.funcoes_globais import *
 
 # imports para simular a stream de input/output
 import io
