@@ -110,20 +110,14 @@ def obter_ganhador(tab):
     Devolve a peça do jogador que ganhou o jogo ou a peça vazia se não houver vencedor."""
     soma_linhas = [0 for _ in range(TAMANHO_TABULEIRO)]
     soma_colunas = [0 for _ in range(TAMANHO_TABULEIRO)]
-    soma_diagonal1 = 0
-    soma_diagonal2 = 0
 
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
             valor = peca_para_inteiro(obter_peca(tab, cria_posicao(index_para_alpha(j + 1), str(i + 1))))
             soma_linhas[i] += valor
             soma_colunas[j] += valor
-            if i == j:
-                soma_diagonal1 += valor
-            if i + j == TAMANHO_TABULEIRO - 1:
-                soma_diagonal2 += valor
 
-    todas_somas = soma_linhas + soma_colunas + [soma_diagonal1, soma_diagonal2] # junta todas as listas de somas
+    todas_somas = soma_linhas + soma_colunas # junta todas as listas de somas
     
     if 3 in todas_somas:
         return cria_peca('X')
