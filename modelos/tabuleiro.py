@@ -7,11 +7,15 @@ from modelos.posicao import *
 from modelos.peca import *
     
 def cria_tabuleiro():
+    """ cria_tabuleiro: {} -> tabuleiro
+    Cria um tabuleiro vazio."""
     return [
         [ ' ' for _ in range(TAMANHO_TABULEIRO) ] for _ in range(TAMANHO_TABULEIRO)
     ]
 
 def cria_copia_tabuleiro(tab):
+    """ cria_copia_tabuleiro: tabuleiro -> tabuleiro
+    Cria uma cópia do tabuleiro."""
     novo_tab = cria_tabuleiro()
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
@@ -19,9 +23,13 @@ def cria_copia_tabuleiro(tab):
     return novo_tab
 
 def obter_peca(tab, pos):
+    """ obter_peca: tabuleiro x posicao -> peca
+    Devolve a peça que está na posição pos do tabuleiro."""
     return tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1]
 
 def obter_vetor(tab, valor):
+    """ obter_vetor: tabuleiro x str -> tuplo
+    Devolve o tuplo correspondente à linha ou coluna do tabuleiro."""
     if not valor.isdigit() and not valor.isalpha(): return False
     if valor.isalpha():
         col = alpha_para_index(valor) - 1
@@ -31,26 +39,38 @@ def obter_vetor(tab, valor):
         return tuple( tab[linha][i] for i in range(TAMANHO_TABULEIRO) )
     
 def coloca_peca(tab, peca, pos):
+    """ coloca_peca: tabuleiro x peca x posicao -> tabuleiro
+    Coloca a peça numa posição do tabuleiro."""
     tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1] = peca
     return tab
 def remove_peca(tab, pos):
+    """ remove_peca: tabuleiro x posicao -> tabuleiro
+    Remove a peça de uma posição do tabuleiro."""
     tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1] = ' '
     return tab
 def move_peca(tab, pos_antes, pos_depois):
+    """ move_peca: tabuleiro x posicao x posicao -> tabuleiro
+    Move a peça de uma posição para outra no tabuleiro."""
     peca = obter_peca(tab, pos_antes)
     tab = remove_peca(tab, pos_antes)
     tab = coloca_peca(tab, peca, pos_depois)
     return tab
 def eh_tabuleiro(arg):
+    """ eh_tabuleiro: qualquer -> booleano
+    Devolve True se o argumento for um tabuleiro válido e False caso contrário."""
     return isinstance(arg, tuple) and len(arg) == TAMANHO_TABULEIRO and all(
         isinstance(linha, list) and len(linha) == TAMANHO_TABULEIRO 
         for linha in arg
     )
 
 def eh_posicao_livre(tab, pos):
+    """ eh_posicao_livre: tabuleiro x posicao -> booleano
+    Devolve True se a posição do tabuleiro estiver livre e False caso contrário."""
     return obter_peca(tab, pos) == ' '
 
 def tabuleiros_iguais(tab1, tab2):
+    """ tabuleiros_iguais: tabuleiro x tabuleiro -> booleano
+    Devolve True se os tabuleiros forem iguais e False caso contrário."""
     return (
         eh_tabuleiro(tab1) 
         and eh_tabuleiro(tab2) 
@@ -61,6 +81,8 @@ def tabuleiros_iguais(tab1, tab2):
         )
     )
 def tabuleiro_para_str(tab):
+    """ tabuleiro_para_str: tabuleiro -> str
+    Devolve a representação em string do tabuleiro."""
     tab_car_count = 0
     resultado = '   ' + ( '   '.join(index_para_alpha(i + 1) for i in range(TAMANHO_TABULEIRO)) ) + '\n'
     for linha in range(TAMANHO_TABULEIRO):
@@ -76,12 +98,16 @@ def tabuleiro_para_str(tab):
             tab_car_count += 1
     return resultado
 def tuplo_para_tabuleiro(tuplo):
+    """ tuplo_para_tabuleiro: tuplo -> tabuleiro
+    Devolve o tabuleiro correspondente ao tuplo dado."""
     novo_tab = cria_tabuleiro()
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
             novo_tab[i][j] = inteiro_para_peca(tuplo[i][j]) if type(tuplo[i][j]) == int else tuplo[i][j]
     return novo_tab
 def obter_ganhador(tab):
+    """ obter_ganhador: tabuleiro -> peca
+    Devolve a peça do jogador que ganhou o jogo ou a peça vazia se não houver vencedor."""
     soma_linhas = [0 for _ in range(TAMANHO_TABULEIRO)]
     soma_colunas = [0 for _ in range(TAMANHO_TABULEIRO)]
     soma_diagonal1 = 0
@@ -97,8 +123,8 @@ def obter_ganhador(tab):
             if i + j == TAMANHO_TABULEIRO - 1:
                 soma_diagonal2 += valor
 
-    todas_somas = soma_linhas + soma_colunas + [soma_diagonal1, soma_diagonal2]
-
+    todas_somas = soma_linhas + soma_colunas + [soma_diagonal1, soma_diagonal2] # junta todas as listas de somas
+    
     if 3 in todas_somas:
         return cria_peca('X')
     elif -3 in todas_somas:
@@ -106,6 +132,8 @@ def obter_ganhador(tab):
     else:
         return cria_peca(' ')
 def obter_posicoes_livres(tab) -> tuple:
+    """ obter_posicoes_livres: tabuleiro -> tuplo
+    Devolve um tuplo com as posições livres do tabuleiro."""
     res = []
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
@@ -114,6 +142,8 @@ def obter_posicoes_livres(tab) -> tuple:
                 res.append(pos)
     return tuple(res)
 def obter_posicoes_jogador(tab, peca):
+    """ obter_posicoes_jogador: tabuleiro x peca -> tuplo
+    Devolve um tuplo com as posições ocupadas pela peça do jogador no tabuleiro."""
     res = []
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
