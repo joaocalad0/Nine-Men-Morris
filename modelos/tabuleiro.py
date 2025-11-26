@@ -1,5 +1,4 @@
 # Marco Francisco - 26963
-#a   b   c\n1 [X]-[ ]-[ ]\n   | \ | / |\n2 [ ]-[ ]-[ ]\n   | / | \ |\n3 [ ]-[ ]-[ ]
 from raiz.utils import alpha_para_index, index_para_alpha
 from raiz.constantes import *
 
@@ -118,11 +117,13 @@ def obter_ganhador(tab):
             soma_colunas[j] += valor
 
     todas_somas = soma_linhas + soma_colunas # junta todas as listas de somas
-    
-    if 3 in todas_somas:
-        return cria_peca('X')
-    elif -3 in todas_somas:
-        return cria_peca('O')
+    o_peca = cria_peca('O')
+    x_peca = cria_peca('X')
+
+    if peca_para_inteiro(x_peca) * PECAS_POR_JOGADOR in todas_somas:
+        return x_peca
+    elif peca_para_inteiro(o_peca) * PECAS_POR_JOGADOR in todas_somas:
+        return o_peca
     else:
         return cria_peca(' ')
 def obter_posicoes_livres(tab) -> tuple:
