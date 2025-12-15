@@ -33,6 +33,15 @@ def posicoes_iguais(p1, p2):
 def posicao_para_str(pos):
     return f'{obter_pos_c(pos)}{obter_pos_l(pos)}'
 
+def str_para_posicao(s):
+    if (len(s) != 2):
+        raise ValueError("str_para_posicao: argumento invalido")
+    coluna = s[0]
+    linha = s[1]
+    if (not eh_posicao([coluna, linha])):
+        raise ValueError("str_para_posicao: argumento invalido")
+    return cria_posicao(coluna, linha)
+
 def obter_posicoes_adjacentes(pos):
     # retorna um tuplo com as posicoes adjacentes
     col = alpha_para_index(obter_pos_c(pos))
