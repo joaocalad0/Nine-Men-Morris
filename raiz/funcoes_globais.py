@@ -2,7 +2,7 @@ from modelos.tabuleiro import *
 
 def obter_movimento_manual(tab, peca):
     """ obter_movimento_manual: tabuleiro x peca -> tuplo
-    Devolve um tuplo com a posição escolhida pelo jogador."""
+    Devolve um tuplo com a posicao escolhida pelo jogador."""
 
     pecas_jogador = obter_posicoes_jogador(tab, peca)
     if len(pecas_jogador) < PECAS_POR_JOGADOR:
@@ -35,7 +35,7 @@ def moinho(peca_humano, nivel):
         raise ValueError("moinho: argumentos invalidos")
     tabuleiro = cria_tabuleiro()
     peca_computador = cria_peca('O') if pecas_iguais(peca_humano, cria_peca('X')) else cria_peca('X')
-    jogador_atual = cria_peca('X')  # X sempre começa
+    jogador_atual = cria_peca('X')  # X sempre que comeca
 
     while True:
         if pecas_iguais(jogador_atual, peca_humano):
@@ -45,7 +45,7 @@ def moinho(peca_humano, nivel):
             movimento = obter_movimento_auto(tabuleiro, peca_computador, nivel)
 
         if movimento is None:
-            break  # Nenhum movimento possível
+            break  # para nenhum movimento possivel
 
         pos_inicial, pos_final = movimento
         move_peca(tabuleiro, pos_inicial, pos_final)
@@ -54,21 +54,21 @@ def moinho(peca_humano, nivel):
         if not pecas_iguais(ganhador, cria_peca(' ')):
             return f"Jogador {peca_para_str(ganhador)} ganhou!"
 
-        # Alterna jogador
+        # Alternar jogador
         jogador_atual = peca_computador if pecas_iguais(jogador_atual, peca_humano) else peca_humano
 
     return "Empate!"
 
 def valor_tabuleiro(tabuleiro):
     """
-    Calcula o valor do tabuleiro para avaliação no minimax
-    Retorna +1 se X ganha, -1 se O ganha, 0 caso contrário
+    Calcula o valor do tabuleiro para avaliacao no minimax
+    Retorna +1 se X ganha, -1 se O ganha, 0 caso contrario
     """
     return peca_para_inteiro(obter_ganhador(tabuleiro))
     
 def obter_movimento_auto(tabuleiro, peca, nivel):
     """
-    Função principal para obter movimento automático conforme o nível
+    Funcao principal para obter movimento automatico conforme o nivel
     """
     peca = 'X' if pecas_iguais(peca, cria_peca('X')) else 'O'
     
@@ -82,9 +82,9 @@ def obter_movimento_auto(tabuleiro, peca, nivel):
         _, seq_movimentos = minimax(tabuleiro, jogador, NIVEIS[nivel], ())
         
         if seq_movimentos:
-            return seq_movimentos[0]  # Retorna primeiro movimento da sequência
+            return seq_movimentos[0]  # Retorna primeiro movimento da sequencia
         else:
-            return movimento_facil(tabuleiro, peca)  # Fallback para nível fácil
+            return movimento_facil(tabuleiro, peca)  # Fallback para nivel facil
     else:
         return None
     
@@ -102,33 +102,34 @@ def minimax(tabuleiro, jogador, profundidade, seq_movimentos):
         tuple: (valor_do_tabuleiro, sequência_de_movimentos)
     """
     
-    # Verifica condição de parada
+    # Verifica condicao de parada
     ganhador = obter_ganhador(tabuleiro)
     if ganhador is not " " or profundidade == 0:
         valor = valor_tabuleiro(tabuleiro)
         return valor, seq_movimentos
     
     # Inicializa melhor resultado
+
     if jogador == 'X':
-        melhor_resultado = float('-inf')  # X quer maximizar
+        melhor_resultado = float('-inf')  # X se quer maximizar
     else:
-        melhor_resultado = float('inf')   # O quer minimizar
+        melhor_resultado = float('inf')   # O se quer minimizar
     
     melhor_seq_movimentos = None
     
-    # Obtém peças do jogador atual
+    # Obtem peças do jogador atual
     peca_jogador = cria_peca(jogador)
     posicoes_jogador = obter_posicoes_jogador(tabuleiro, peca_jogador)
     
-    # Para cada peça do jogador atual
+    # Para cada peca do jogador atual
     for pos_peca in posicoes_jogador:
-        # Para cada posição adjacente
+        # Para cada posicao adjacente
         posicoes_adj = obter_posicoes_adjacentes(pos_peca)
         
         for pos_destino in posicoes_adj:
-            # Se a posição está livre
+            # Se a posicao esta livre
             if eh_posicao_livre(tabuleiro, pos_destino):
-                # Cria cópia do tabuleiro
+                # Cria copia do tabuleiro
                 tabuleiro_copia = cria_copia_tabuleiro(tabuleiro)
                 
                 # Realiza o movimento
@@ -159,7 +160,7 @@ def minimax(tabuleiro, jogador, profundidade, seq_movimentos):
 
 def movimento_facil(tabuleiro, peca):
     """
-    Nível fácil: primeira peça com posição adjacente livre
+    Nivel fácil: primeira peça com posicao adjacente livre
     """
     posicoes = obter_posicoes_jogador(tabuleiro, peca)
     
@@ -169,7 +170,7 @@ def movimento_facil(tabuleiro, peca):
             if eh_posicao_livre(tabuleiro, adj):
                 return (pos, adj)
     
-    # Se não há movimentos possíveis, retorna movimento nulo
+    # Se não ha movimentos possiveis, retorna movimento nulo
     if posicoes:
         return (posicoes[0], posicoes[0])
     return None
