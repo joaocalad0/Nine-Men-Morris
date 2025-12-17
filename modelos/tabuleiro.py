@@ -1,4 +1,5 @@
 # Marco Francisco - 26963
+# Joao Calado - 24295
 from raiz.utils import alpha_para_index, index_para_alpha
 from raiz.constantes import *
 
@@ -28,7 +29,7 @@ def obter_peca(tab, pos):
 
 def obter_vetor(tab, valor):
     """ obter_vetor: tabuleiro x str -> tuplo
-    Devolve o tuplo correspondente à linha ou coluna do tabuleiro."""
+    Devolve o tuplo correspondente a linha ou coluna do tabuleiro."""
     if not valor.isdigit() and not valor.isalpha(): return False
     if valor.isalpha():
         col = alpha_para_index(valor) - 1
@@ -39,24 +40,28 @@ def obter_vetor(tab, valor):
     
 def coloca_peca(tab, peca, pos):
     """ coloca_peca: tabuleiro x peca x posicao -> tabuleiro
-    Coloca a peça numa posição do tabuleiro."""
+    Coloca a peça numa posicao do tabuleiro."""
+
     tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1] = peca
     return tab
+
 def remove_peca(tab, pos):
     """ remove_peca: tabuleiro x posicao -> tabuleiro
-    Remove a peça de uma posição do tabuleiro."""
+    Remove a peça de uma posicao do tabuleiro."""
     tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1] = ' '
     return tab
+
 def move_peca(tab, pos_antes, pos_depois):
     """ move_peca: tabuleiro x posicao x posicao -> tabuleiro
-    Move a peça de uma posição para outra no tabuleiro."""
+    Move a peça de uma posicao para outra no tabuleiro."""
     peca = obter_peca(tab, pos_antes)
     tab = remove_peca(tab, pos_antes)
     tab = coloca_peca(tab, peca, pos_depois)
     return tab
+
 def eh_tabuleiro(arg):
     """ eh_tabuleiro: qualquer -> booleano
-    Devolve True se o argumento for um tabuleiro válido e False caso contrário."""
+    Devolve True se o argumento for um tabuleiro valido e False caso contrario."""
     return isinstance(arg, tuple) and len(arg) == TAMANHO_TABULEIRO and all(
         isinstance(linha, list) and len(linha) == TAMANHO_TABULEIRO 
         for linha in arg
@@ -64,12 +69,12 @@ def eh_tabuleiro(arg):
 
 def eh_posicao_livre(tab, pos):
     """ eh_posicao_livre: tabuleiro x posicao -> booleano
-    Devolve True se a posição do tabuleiro estiver livre e False caso contrário."""
+    Devolve True se a posicao do tabuleiro estiver livre e False caso contrario."""
     return obter_peca(tab, pos) == ' '
 
 def tabuleiros_iguais(tab1, tab2):
     """ tabuleiros_iguais: tabuleiro x tabuleiro -> booleano
-    Devolve True se os tabuleiros forem iguais e False caso contrário."""
+    Devolve True se os tabuleiros forem iguais e False caso contrario."""
     return (
         eh_tabuleiro(tab1) 
         and eh_tabuleiro(tab2) 
@@ -81,7 +86,7 @@ def tabuleiros_iguais(tab1, tab2):
     )
 def tabuleiro_para_str(tab):
     """ tabuleiro_para_str: tabuleiro -> str
-    Devolve a representação em string do tabuleiro."""
+    Devolve a representacao em string do tabuleiro."""
     tab_car_count = 0
     resultado = '   ' + ( '   '.join(index_para_alpha(i + 1) for i in range(TAMANHO_TABULEIRO)) ) + '\n'
     for linha in range(TAMANHO_TABULEIRO):
@@ -128,7 +133,7 @@ def obter_ganhador(tab):
         return cria_peca(' ')
 def obter_posicoes_livres(tab) -> tuple:
     """ obter_posicoes_livres: tabuleiro -> tuplo
-    Devolve um tuplo com as posições livres do tabuleiro."""
+    Devolve um tuplo com as posicoes livres do tabuleiro."""
     res = []
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
@@ -136,9 +141,10 @@ def obter_posicoes_livres(tab) -> tuple:
             if eh_posicao_livre(tab, pos):
                 res.append(pos)
     return tuple(res)
+
 def obter_posicoes_jogador(tab, peca):
     """ obter_posicoes_jogador: tabuleiro x peca -> tuplo
-    Devolve um tuplo com as posições ocupadas pela peça do jogador no tabuleiro."""
+    Devolve um tuplo com as posicoes ocupadas pela peça do jogador no tabuleiro."""
     res = []
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
