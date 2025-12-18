@@ -15,7 +15,7 @@ def cria_tabuleiro():
 
 def cria_copia_tabuleiro(tab):
     """ cria_copia_tabuleiro: tabuleiro -> tabuleiro
-    Cria uma cópia do tabuleiro."""
+    Cria uma copia do tabuleiro."""
     novo_tab = cria_tabuleiro()
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):
@@ -24,7 +24,7 @@ def cria_copia_tabuleiro(tab):
 
 def obter_peca(tab, pos):
     """ obter_peca: tabuleiro x posicao -> peca
-    Devolve a peça que está na posição pos do tabuleiro."""
+    Devolve a peca que esta na posicao pos do tabuleiro."""
     return tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1]
 
 def obter_vetor(tab, valor):
@@ -40,20 +40,20 @@ def obter_vetor(tab, valor):
     
 def coloca_peca(tab, peca, pos):
     """ coloca_peca: tabuleiro x peca x posicao -> tabuleiro
-    Coloca a peça numa posicao do tabuleiro."""
+    Coloca a peca numa posicao do tabuleiro."""
 
     tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1] = peca
     return tab
 
 def remove_peca(tab, pos):
     """ remove_peca: tabuleiro x posicao -> tabuleiro
-    Remove a peça de uma posicao do tabuleiro."""
+    Remove a peca de uma posicao do tabuleiro."""
     tab[int(obter_pos_l(pos)) - 1][alpha_para_index(obter_pos_c(pos)) - 1] = ' '
     return tab
 
 def move_peca(tab, pos_antes, pos_depois):
     """ move_peca: tabuleiro x posicao x posicao -> tabuleiro
-    Move a peça de uma posicao para outra no tabuleiro."""
+    Move a peca de uma posicao para outra no tabuleiro."""
     peca = obter_peca(tab, pos_antes)
     tab = remove_peca(tab, pos_antes)
     tab = coloca_peca(tab, peca, pos_depois)
@@ -111,7 +111,7 @@ def tuplo_para_tabuleiro(tuplo):
     return novo_tab
 def obter_ganhador(tab):
     """ obter_ganhador: tabuleiro -> peca
-    Devolve a peça do jogador que ganhou o jogo ou a peça vazia se não houver vencedor."""
+    Devolve a peca do jogador que ganhou o jogo ou a peca vazia se nao houver vencedor."""
     soma_linhas = [0 for _ in range(TAMANHO_TABULEIRO)]
     soma_colunas = [0 for _ in range(TAMANHO_TABULEIRO)]
 
@@ -144,7 +144,7 @@ def obter_posicoes_livres(tab) -> tuple:
 
 def obter_posicoes_jogador(tab, peca):
     """ obter_posicoes_jogador: tabuleiro x peca -> tuplo
-    Devolve um tuplo com as posicoes ocupadas pela peça do jogador no tabuleiro."""
+    Devolve um tuplo com as posicoes ocupadas pela peca do jogador no tabuleiro."""
     res = []
     for i in range(TAMANHO_TABULEIRO):
         for j in range(TAMANHO_TABULEIRO):

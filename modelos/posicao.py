@@ -12,7 +12,7 @@ def cria_posicao(coluna, linha):
     return [coluna.lower(), linha]
 
 
-#cria uma cópia de uma posicao
+#cria uma copia de uma posicao
 #converte dict para list
 def cria_copia_posicao(pos):
     if(type(pos) == dict): pos = list(pos.values())
@@ -21,7 +21,7 @@ def cria_copia_posicao(pos):
 
 #retorna a coluna de uma posicao
 def obter_pos_c(pos):
-    return pos[0]
+    return pos[0] 
 
 #retorna a linha de uma posicao como string
 def obter_pos_l(pos):
@@ -34,7 +34,6 @@ def eh_posicao(arg):
     and alpha_para_index(arg[0]) > 0 and alpha_para_index(arg[0]) <= TAMANHO_TABULEIRO 
     and int(arg[1]) > 0 and int(arg[1]) <= TAMANHO_TABULEIRO )
 
-
 #Compara duas posicoes para ver se sao iguais
 #apenas retorna True se ambas forem posicoes validas e tiverem mesma coluna e linha
 def posicoes_iguais(p1, p2):
@@ -45,12 +44,9 @@ def posicoes_iguais(p1, p2):
         and p1[1] == p2[1]
     )
 
-
 #converte uma posicao para string no formato "A1", "B2",
 def posicao_para_str(pos):
     return f'{obter_pos_c(pos)}{obter_pos_l(pos)}'
-
-
 
 def str_para_posicao(s):
     if (len(s) != 2):
@@ -61,13 +57,17 @@ def str_para_posicao(s):
         raise ValueError("str_para_posicao: argumento invalido")
     return cria_posicao(coluna, linha)
 
-
-
 def obter_posicoes_adjacentes(pos):
     # retorna um tuplo com as posicoes adjacentes
     col = alpha_para_index(obter_pos_c(pos))
     li = int(obter_pos_l(pos))
-    posicoes_adj = [[col, li - 1], [col - 1, li], [col, li + 1], [col + 1, li]] # a ordem importa
+    # ordenado por ordem de leitura
+    posicoes_adj = [ # a ordem importa
+        [col, li - 1],  # cima
+        [col - 1, li],  # esquerda
+        [col + 1, li],  # direita
+        [col, li + 1]   # baixo
+    ]
     resultado = []
     for p in posicoes_adj:  
         if(p[0] >= 1 and p[0] <= TAMANHO_TABULEIRO and p[1] >= 1 and p[1] <= TAMANHO_TABULEIRO):

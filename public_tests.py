@@ -248,6 +248,7 @@ else:
 
 num_tests += 1
 t = tuplo_para_tabuleiro(((1, -1, -1), (-1, 1, 0), (0, 0, 1)))
+print (tabuleiro_para_str(t))
 m = obter_movimento_auto(t, cria_peca('X'), 'normal')
 if posicao_para_str(m[0]) == "b2" and posicao_para_str(m[1]) == "c2" and len(m) == 2:
     total_score += 1
@@ -283,7 +284,8 @@ try:
         print("\nTeste " + str(num_tests) + ": Passou")
     else:
         print("\nTeste " + str(num_tests) + ": Falhou")
-except:
+except Exception as e:
+    print (e)
     print("\nTeste " + str(num_tests) + ": Falhou")
     pass
 
