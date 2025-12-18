@@ -1,7 +1,7 @@
 # Marco Francisco - 26963
 # Joao Calado - 24295
 
-# Função que cria uma "peca" se for valida.
+# Funcao que cria uma "peca" se for valida.
 # Aceita apenas 'X', 'O' ou ' '
 def cria_peca(marca):
     if not eh_peca(marca):
@@ -9,7 +9,7 @@ def cria_peca(marca):
     return marca # Retorna a marca se valida
 
 # Cria uma copia da peca recebida.
-# Neste caso, como as peças são imutaveis, equivalente a retornar o mesmo valor.
+# Neste caso, como as pecas sao imutaveis, equivalente a retornar o mesmo valor.
 def cria_copia_peca(arg):
     return cria_peca(arg)
 
@@ -18,7 +18,7 @@ def eh_peca(arg):
     return arg in ["X", "O", ' ']
 
 # Compara duas pecas para ver se sao iguais.
-# Apenas retorna True se ambos forem peças validas e iguais.
+# Apenas retorna True se ambos forem pecas validas e iguais.
 def pecas_iguais(p1, p2):
     return (
         eh_peca(p1) 
@@ -30,7 +30,9 @@ def pecas_iguais(p1, p2):
 def peca_para_str(marca):
     return f'[{marca}]'
 
-
+def str_para_peca(s):
+    if len(s) != 3 or s[0] != '[' or s[2] != ']' or not eh_peca(s[1]): return None
+    return cria_peca(s[1])
 #converte a peca para int
 def peca_para_inteiro(marca):
     if marca == 'X':
